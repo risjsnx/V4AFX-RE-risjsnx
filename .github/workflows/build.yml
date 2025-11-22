@@ -17,7 +17,6 @@ jobs:
     steps:
       # Checkout the repository to access the source code
       - uses: actions/checkout@v4
-      - uses: actions/cache@v4.3.0
 
       # Install Android SDK command-line tools
       - name: Install Android SDK and NDK

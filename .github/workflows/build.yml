@@ -25,23 +25,25 @@ jobs:
           mkdir -p $HOME/android-sdk/cmdline-tools
           cd $HOME/android-sdk
 
-          # Download and unzip the command-line tools
+      - name: Download and unzip the command-line tools
+        run: |
           wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
           unzip commandlinetools-linux-8512546_latest.zip -d cmdline-tools
 
-          # Rename the extracted directory to 'latest'
-          mv cmdline-tools/cmdline-tools cmdline-tools/latest
+      - name: Rename the extracted directory to "latest"
+        run: mv cmdline-tools/cmdline-tools cmdline-tools/latest
 
-          # Update PATH for sdkmanager
-          export PATH=$HOME/android-sdk/cmdline-tools/latest/bin:$PATH
+      - name: Update PATH for sdkmanager
+        run: export PATH=$HOME/android-sdk/cmdline-tools/latest/bin:$PATH
 
-          # Accept licenses
-          yes | sdkmanager --licenses
+      - name: Accept license
+        run: yes | sdkmanager --licenses
 
-          # Install NDK
-          sdkmanager --install "ndk;${{ env.NDK_VERSION }}"
+      - name: Install NDK
+        run: sdkmanager --install "ndk;${{ env.NDK_VERSION }}"
 
-          # Ensure the NDK is installed in a predictable location
+      - name: Ensure the NDK is installed in a predictable location
+        run: |
           NDK_PATH="$HOME/android-sdk/ndk/${{ env.NDK_VERSION }}"
           if [ -d "$NDK_PATH" ]; then
             echo "NDK is already installed at $NDK_PATH"

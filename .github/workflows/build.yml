@@ -17,7 +17,7 @@ jobs:
     steps:
       # Checkout the repository to access the source code
       - uses: actions/checkout@v4
-          
+
       # Install Android SDK command-line tools
       - name: Install Android SDK and NDK
         run: |
@@ -25,25 +25,23 @@ jobs:
           mkdir -p $HOME/android-sdk/cmdline-tools
           cd $HOME/android-sdk
 
-      - name: Download and unzip the command-line tools
-        run: |
+          # Download and unzip the command-line tools
           wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
           unzip commandlinetools-linux-8512546_latest.zip -d cmdline-tools
 
-      - name: Rename the extracted directory to "latest"
-        run: mv cmdline-tools/cmdline-tools cmdline-tools/latest
+          # Rename the extracted directory to 'latest'
+          mv cmdline-tools/cmdline-tools cmdline-tools/latest
 
-      - name: Update PATH for sdkmanager
-        run: export PATH=$HOME/android-sdk/cmdline-tools/latest/bin:$PATH
+          # Update PATH for sdkmanager
+          export PATH=$HOME/android-sdk/cmdline-tools/latest/bin:$PATH
 
-      - name: Accept license
-        run: yes | sdkmanager --licenses
+          # Accept licenses
+          yes | sdkmanager --licenses
 
-      - name: Install NDK
-        run: sdkmanager --install "ndk;${{ env.NDK_VERSION }}"
+          # Install NDK
+          sdkmanager --install "ndk;${{ env.NDK_VERSION }}"
 
-      - name: Ensure the NDK is installed in a predictable location
-        run: |
+          # Ensure the NDK is installed in a predictable location
           NDK_PATH="$HOME/android-sdk/ndk/${{ env.NDK_VERSION }}"
           if [ -d "$NDK_PATH" ]; then
             echo "NDK is already installed at $NDK_PATH"
@@ -51,12 +49,8 @@ jobs:
             echo "NDK installation failed"
             exit 1
           fi
-      
-      #
-      #
+
       # Set the environment variable for the NDK path
-      #
-      #
       - name: Set NDK environment variable
         run: echo "ANDROID_NDK_HOME=$HOME/android-sdk/ndk/${{ env.NDK_VERSION }}" >> $GITHUB_ENV
 
@@ -129,8 +123,6 @@ jobs:
           path: viper4android_module.zip
 
   release:
-    permissions:
-      contents: write
     needs: package
     runs-on: ubuntu-latest
     steps:
@@ -153,7 +145,7 @@ jobs:
           name: ViPER4Android Module
           draft: true
           prerelease: false
-          files: V4AFX-RE-risjsnx.zip
+          files: viper4android_module.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           

@@ -123,6 +123,8 @@ jobs:
           path: viper4android_module.zip
 
   release:
+    permissions:
+      contents: write
     needs: package
     runs-on: ubuntu-latest
     steps:

@@ -17,7 +17,11 @@ jobs:
     steps:
       # Checkout the repository to access the source code
       - uses: actions/checkout@v4
-
+      - uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r21e
+          local-cache: true
+          
       # Install Android SDK command-line tools
       - name: Install Android SDK and NDK
         run: |

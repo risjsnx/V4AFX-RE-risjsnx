@@ -1,4 +1,6 @@
 # ViPERFX_RE
+> [!NOTE]
+> this module is based on WSTxda's module with a few tweaks, so please support WstXDA for it's work 
 
 This is a reverse-engineering project aimed to make ViPER4Android more easy to access, modify, and improve.
 Some QOL changes have been made, such as processing audio as float32, removing unused code, using more modern libraries, etc.

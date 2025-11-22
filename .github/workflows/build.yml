@@ -51,8 +51,12 @@ jobs:
             echo "NDK installation failed"
             exit 1
           fi
-
+      
+      #
+      #
       # Set the environment variable for the NDK path
+      #
+      #
       - name: Set NDK environment variable
         run: echo "ANDROID_NDK_HOME=$HOME/android-sdk/ndk/${{ env.NDK_VERSION }}" >> $GITHUB_ENV
 

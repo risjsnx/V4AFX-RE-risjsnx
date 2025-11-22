@@ -4,7 +4,7 @@
 
 This is a reverse-engineering project aimed to make ViPER4Android more easy to access, modify, and improve.
 Some QOL changes have been made, such as processing audio as float32, removing unused code, using more modern libraries, etc.
-To view the progress, see [Issue #2](https://github.com/AndroidAudioMods/ViPERFX_RE/issues/2)
+To view the progress, see [Issue #2 (old/unused)](https://github.com/AndroidAudioMods/ViPERFX_RE/issues/2)
 
 # Building
 

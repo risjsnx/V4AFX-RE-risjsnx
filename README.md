@@ -9,7 +9,7 @@ To view the progress, see [Issue #2 (old/unused)](https://github.com/AndroidAudi
 # Building
 
 - Install the NDK, CMake and Make.
-- Run `cmake . -DCMAKE_TOOLCHAIN_FILE=<NDKROOT>/build/cmake/android.toolchain.cmake -DANDROID_ABI=<ABI>` where <NDKROOT> is where you installed the NDK and <ABI> is the target ABI to build for.
+- Run `cmake . -DCMAKE_TOOLCHAIN_FILE=(NDKROOT)/build/cmake/android.toolchain.cmake -DANDROID_ABI=(ABI)` where (NDKROOT) is where you installed the NDK and (ABI) is the target ABI to build for.
 - Run `make`
 - You should now find a `libv4afx_r.so` file in your project root.
 

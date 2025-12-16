@@ -1,7 +1,7 @@
 #!/system/bin/sh
 
 # ViPER4Android FX Redesign variables
-APP_PACKAGE="com.wstxda.viper4android"
+: ' APP_PACKAGE="com.wstxda.viper4android"
 APP_ACTIVITY="com.wstxda.viper4android.MainActivity"
 DOWNLOAD_URL="https://github.com/WSTxda/ViperFX-RE-Releases/releases/latest"
 
@@ -23,3 +23,5 @@ else
     log_message "App not installed, download and install the latest version from GitHub repository:"
     am start -a android.intent.action.VIEW -d "$DOWNLOAD_URL"
 fi
+' # disalbe this since we are building a new method
+

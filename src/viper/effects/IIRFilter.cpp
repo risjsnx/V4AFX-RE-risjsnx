@@ -4,6 +4,7 @@
 #include "../constants.h"
 
 // Iscle: Verified with the latest version at 13/12/2022
+// used as a equalizer also as an alternatives to FIRequalizer
 
 IIRFilter::IIRFilter(uint32_t bands) {
     this->enable = false;

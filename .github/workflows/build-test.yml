@@ -1,6 +1,6 @@
 name: test build
 
-on: workflow_dispatch
+on: [ workflow_dispatch, push, pull_request ]
 
 env:
   NDK_VERSION: 27.2.12479018

@@ -1,4 +1,4 @@
-name: build
+name: release
 
 on: workflow_dispatch
 
@@ -17,6 +17,13 @@ jobs:
     steps:
       # Checkout the repository to access the source code
       - uses: actions/checkout@v4
+
+      # Cache
+      - name: Cache packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache
 
       # Install Android SDK command-line tools
       - name: Install Android SDK and NDK
@@ -148,4 +155,3 @@ jobs:
           files: viper4android_module.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          

@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache
-        key: Android-cache
+          key: Android-cache
 
       # Install Android SDK command-line tools
       - name: Install Android SDK and NDK

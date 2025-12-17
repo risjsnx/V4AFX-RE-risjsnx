@@ -19,11 +19,11 @@ jobs:
       - uses: actions/checkout@v4
 
       # Cache
-      - name: Cache packages
+      - name: Check cached packages
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cache
+          path: ~/.cache
+        key: Android-cache
 
       # Install Android SDK command-line tools
       - name: Install Android SDK and NDK

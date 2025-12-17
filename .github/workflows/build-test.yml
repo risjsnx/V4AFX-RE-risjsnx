@@ -22,7 +22,7 @@ jobs:
       - name: Check cached packages
         uses: actions/cache@v4
         with:
-          path: ~/.cache
+          path: ~/android-sdk
           key: Android-cache
 
       # Install Android SDK command-line tools

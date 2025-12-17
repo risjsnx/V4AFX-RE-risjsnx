@@ -1,0 +1,68 @@
+name: release
+
+on: workflow_dispatch, push
+
+env:
+  NDK_VERSION: 27.2.12479018
+  MIN_SDK_VERSION: 21
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        abi: ['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64']
+
+    steps:
+      # Checkout the repository to access the source code
+      - uses: actions/checkout@v4
+
+      # Cache
+      - name: Check cached packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache
+          key: Android-cache
+
+      # Install Android SDK command-line tools
+      - name: Install Android SDK and NDK
+        run: |
+          # Create the directory for SDK command-line tools
+          mkdir -p $HOME/android-sdk/cmdline-tools
+          cd $HOME/android-sdk
+
+          # Download and unzip the command-line tools
+          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
+          unzip commandlinetools-linux-8512546_latest.zip -d cmdline-tools
+
+          # Rename the extracted directory to 'latest'
+          mv cmdline-tools/cmdline-tools cmdline-tools/latest
+
+          # Update PATH for sdkmanager
+          export PATH=$HOME/android-sdk/cmdline-tools/latest/bin:$PATH
+
+          # Accept licenses
+          yes | sdkmanager --licenses
+
+          # Install NDK
+          sdkmanager --install "ndk;${{ env.NDK_VERSION }}"
+
+          # Ensure the NDK is installed in a predictable location
+          NDK_PATH="$HOME/android-sdk/ndk/${{ env.NDK_VERSION }}"
+          if [ -d "$NDK_PATH" ]; then
+            echo "NDK is already installed at $NDK_PATH"
+          else
+            echo "NDK installation failed"
+            exit 1
+          fi
+
+      # Set the environment variable for the NDK path
+      - name: Set NDK environment variable
+        run: echo "ANDROID_NDK_HOME=$HOME/android-sdk/ndk/${{ env.NDK_VERSION }}" >> $GITHUB_ENV
+
+      # Configure and build the project using CMake
+      - name: Build with CMake
+        run: |
+          cmake -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_ABI=${{ matrix.abi }} -DANDROID_PLATFORM=android-${{ env.MIN_SDK_VERSION }} -DANDROID_ARM_NEON=TRUE .
+          cmake --build . -- -j$(nproc)

@@ -18,13 +18,6 @@ jobs:
       # Checkout the repository to access the source code
       - uses: actions/checkout@v4
 
-      # Cache
-      - name: Check cached packages
-        uses: actions/cache@v4
-        with:
-          path: ~/android-sdk
-          key: Android-cache
-
       # Install Android SDK command-line tools
       - name: Install Android SDK and NDK
         run: |
@@ -66,3 +59,12 @@ jobs:
         run: |
           cmake -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_ABI=${{ matrix.abi }} -DANDROID_PLATFORM=android-${{ env.MIN_SDK_VERSION }} -DANDROID_ARM_NEON=TRUE .
           cmake --build . -- -j$(nproc)
+  cache:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: cache packages
+        uses: actions/cache@v4
+        with:
+          path: ~/android-sdk
+          key: Android-cache
